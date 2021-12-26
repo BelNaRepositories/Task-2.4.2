@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user-list</title>
+    <style>table th, table td {padding: 5px;}</style>
+</head>
+<body>
+<div th:switch="${user}">
+    <h2 th:case="null">No users found!</h2>
+    <div th:case="*">
+        <h2>User</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>SSOID</th>
+                <th>PASSWORD</th>
+                <th>FIRST_NAME</th>
+                <th>LAST_NAME</th>
+                <th>EMAIL</th>
+                <th>ROLES</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="app_user : ${user}">
+                <td th:utext="${app_user.id}">id</td>
+                <td th:utext="${app_user.ssoId}">ssoId</td>
+                <td th:utext="${app_user.password}">password</td>
+                <td th:utext="${app_user.firstName}">firstName</td>
+                <td th:utext="${app_user.lastName}">lastName</td>
+                <td th:utext="${app_user.email}">email</td>
+                <td th:utext="${app_user.roles }">roles</td>
+                <td><a th:href="@{user-update/{id}(id=${app_user.id})}">Update</a></td>
+                <td><a th:href="@{user-delete/{id}(id=${app_user.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/user-create">Create</a></p>
+</div>
+<!--<form th:action="@{/logout}" method="post">-->
+<!--    <input type="submit" value="Logout" />-->
+<!--</form>-->
+</div>
+<p><a href="/logout">Logout</a></p>
+</div>
+</body>
+</html>

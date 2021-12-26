@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello user</title>
+</head>
+<body>
+<div>
+    <table>
+        <thead>
+<tr>
+    <th>ID</th>
+    <th>SSOID</th>
+    <th>PASSWORD</th>
+    <th>FIRST_NAME</th>
+    <th>LAST_NAME</th>
+    <th>EMAIL</th>
+
+</tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${user.getId()}">id</td>
+            <td th:text="${user.getSsoId()}">ssoId</td>
+            <td th:text="${user.getPassword()}">PASSWORD</td>
+            <td th:text="${user.getFirstName()}">firstName</td>
+            <td th:text="${user.getLastName()}">lastName</td>
+            <td th:text="${user.getEmail()}">email</td>
+           </tr>
+        </tbody>
+    </table>
+</div>
+</div>
+<p><a href="/logout">Logout</a></p>
+</div>
+</body>
+</html>
