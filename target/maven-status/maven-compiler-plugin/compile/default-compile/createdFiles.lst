@@ -1,0 +1,17 @@
+web\service\UserService.class
+web\config\HibernateConfig.class
+web\config\SpringSecurityInitializer.class
+web\service\RoleServiceImp.class
+web\config\AppInit.class
+web\service\RoleService.class
+web\config\SecurityConfig.class
+web\config\WebConfig.class
+web\dao\RoleDao.class
+web\model\Role.class
+web\service\UserServiceImp.class
+web\dao\UserDaoImp.class
+web\dao\RoleDaoImp.class
+web\config\handler\LoginSuccessHandler.class
+web\controller\UserController.class
+web\dao\UserDao.class
+web\model\User.class

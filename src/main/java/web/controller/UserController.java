@@ -5,12 +5,9 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import web.model.Role;
 import web.model.User;
 import web.service.RoleService;
 import web.service.UserService;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -41,24 +38,14 @@ public class UserController {
 		return "user-list";
 	}
 
-	    @GetMapping(value = "/user-create")
-	public String createUsersFrom(User user) {
+	@GetMapping(value = "/user-create")
+	public String createUsersFrom(@ModelAttribute("user") User user, Model model) {
+		model.addAttribute("roles", roleService.getAllRoles());
 		return "user-create";
 	}
 
-	@PostMapping(value = "/user-create")
-	public String createUsers(@ModelAttribute("user") User user,
-				@RequestParam(required=false) String roleAdmin,
-				@RequestParam(required=false) String roleCreator) {
-		Set<Role> roles = new HashSet<>();
-		roles.add(roleService.getRoleByName("ROLE_USER"));
-		if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-			roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-		}
-		if (roleCreator != null && roleCreator.equals("ROLE_CREATOR")) {
-			roles.add(roleService.getRoleByName("ROLE_CREATOR"));
-		}
-		user.setRoles(roles);
+	@PostMapping (value = "/user-create")
+	public String createUsers(@ModelAttribute("user") User user) {
 		userService.saveUser(user);
 		return "redirect:/admin";
 	}
@@ -73,22 +60,13 @@ public class UserController {
 	public String updateUserForm(@PathVariable("id") Long id, Model model){
 		User user = userService.readUser(id);
 		model.addAttribute("user", user);
+		model.addAttribute("roles", roleService.getAllRoles());
 		return "user-update";
 	}
 
 	@PostMapping("/user-update")
-    public String updateUser(@ModelAttribute("user") User user,
-				@RequestParam(required=false) String roleAdmin,
-				@RequestParam(required=false) String roleCreator) {
-		Set<Role> roles = new HashSet<>();
-		roles.add(roleService.getRoleByName("ROLE_USER"));
-		if (roleAdmin != null && roleAdmin.equals("ROLE_ADMIN")) {
-			roles.add(roleService.getRoleByName("ROLE_ADMIN"));
-		}
-		if (roleCreator != null && roleCreator.equals("ROLE_CREATOR")) {
-			roles.add(roleService.getRoleByName("ROLE_CREATOR"));
-		}
-		user.setRoles(roles);
+	public String updateUser(@ModelAttribute("user") User user) {
+
 		userService.update(user);
 		return "redirect:/admin";
 	}

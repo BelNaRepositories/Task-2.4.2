@@ -32,6 +32,7 @@
                 <td th:utext="${app_user.lastName}">lastName</td>
                 <td th:utext="${app_user.email}">email</td>
                 <td th:utext="${app_user.roles }">roles</td>
+.
                 <td><a th:href="@{user-update/{id}(id=${app_user.id})}">Update</a></td>
                 <td><a th:href="@{user-delete/{id}(id=${app_user.id})}">Delete</a></td>
             </tr>

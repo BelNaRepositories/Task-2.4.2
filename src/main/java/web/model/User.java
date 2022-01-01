@@ -4,10 +4,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name="app_user")
@@ -37,19 +36,20 @@ public class User implements UserDetails {
     @JoinTable(name = "user_role",
             joinColumns = { @JoinColumn(name = "USER_ID") },
             inverseJoinColumns = { @JoinColumn(name = "ROLE_ID") })
-    private Set<Role> roles;
-
+    private Collection<Role> roles = new HashSet<>();
     public User() {
     }
 
-    public User(Long id, String ssoId, String password, String firstName, String lastName, String email, Set<Role> roles) {
+
+    public User(Long id, String ssoId, String password, String firstName, String lastName, String email, Collection<Role> roles) {
         this.id = id;
         this.ssoId = ssoId;
         this.password = password;
-        this.roles = roles;
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.roles = roles;
       }
 
     public Long getId() {
@@ -58,14 +58,6 @@ public class User implements UserDetails {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSsoId() {
-        return ssoId;
-    }
-
-    public void setSsoId(String ssoId) {
-        this.ssoId = ssoId;
     }
 
     @Override
@@ -103,16 +95,17 @@ public class User implements UserDetails {
         return true;
     }
 
+
     public void setPassword(String password) {
         this.password = password;
     }
 
-   public Set<Role> getRoles() {
-        return roles;
+    public String getSsoId() {
+        return ssoId;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setSsoId(String ssoId) {
+        this.ssoId = ssoId;
     }
 
     public String getFirstName() {
@@ -137,6 +130,14 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
     }
 
     @Override

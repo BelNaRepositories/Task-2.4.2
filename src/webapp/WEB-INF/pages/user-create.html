@@ -17,21 +17,18 @@
     <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email" placeholder="Email">
-    <label>
-        <input type="checkbox"
-               name="roleAdmin"
-               th:checked="${roleAdmin}"
-               th:value="ROLE_ADMIN"
-               th:text="ROLE_ADMIN">
-    </label>
-    <label>
-        <input type="checkbox"
-               name="roleCreator"
-               th:checked="${roleCreator}"
-               th:value="ROLE_CREATOR"
-               th:text="ROLE_CREATOR">
-    </label>
-    <input type="submit" value="Create">
+
+    <div class="text-field text-field_floating-3">
+        <label for="roles">Select roles</label>
+        <select id="roles" name="roles" multiple="multiple">
+            <option th:each="role : ${roles}"
+                    th:value="${role.getRole()}"
+                    th:text="${role.getRole()}">
+            </option>
+        </select>
+    </div>
+
+   <input type="submit" value="Create">
 </form>
 </div>
 <p><a href="/logout">Logout</a></p>

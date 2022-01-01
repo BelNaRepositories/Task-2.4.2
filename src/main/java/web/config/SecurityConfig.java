@@ -10,10 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.filter.CharacterEncodingFilter;
 import web.config.handler.LoginSuccessHandler;
 
 @Configuration
@@ -46,7 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("HelloUser").access("hasAnyRole('ROLE_USER', 'ROLE_CREATOR', 'ADMIN')")
+                .antMatchers("HelloUser").access("hasAnyRole('ROLE_USER', 'ROLE_CREATOR', 'ADMIN', 'ROLE_GUEST')")
                 .antMatchers("/admin").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/user-create").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/user-update/**").hasAnyAuthority("ROLE_ADMIN")
@@ -68,7 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-             return NoOpPasswordEncoder.getInstance();
+    public PasswordEncoder passwordEncoder(){
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder;
     }
 }
